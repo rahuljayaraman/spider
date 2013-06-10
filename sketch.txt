@@ -1,0 +1,12 @@
+spider = Spider.new name: "Google"
+
+visit = Action.new :visit
+yank = Action.new :yank
+:find_form
+:fill
+
+spider.add_to_web visit
+spider.add_to_web yank
+
+spider.crawl
+
