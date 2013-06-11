@@ -5,7 +5,7 @@ end
 
 require 'mechanize'
 
-class Spidy
+class ScrapingSpider
   attr_accessor :name
   def initialize name, agent
     @name = name

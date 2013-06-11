@@ -1,7 +1,7 @@
-require_relative '../../lib/spidy'
+require_relative '../../lib/scraping_spider'
 
-describe Spidy do
-  let(:spider) { Spidy.new "Test", :mechanize }
+describe ScrapingSpider do
+  let(:spider) { ScrapingSpider.new "Test", :mechanize }
   let(:action1) { stub(action_type: :visit, url: "http://google.com") }
   let(:action2) { stub(action_type: :form, field_name: "q", text: "Apple") }
   let(:action3) { stub(action_type: :yank, div: "resultStats") }
