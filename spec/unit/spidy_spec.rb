@@ -1,7 +1,5 @@
 require_relative '../../lib/spidy'
 
-class Agent; end
-
 describe Spidy do
   let(:spider) { Spidy.new "Test" }
   let(:action1) { stub(action_type: :visit, url: "http://google.com") }
@@ -17,7 +15,8 @@ describe Spidy do
     spider.actions.should == [action1, action2]
   end
 
-  it "should delegate actions correctly when asked to crawl" do
+  it "should delegate 
+  actions correctly when asked to crawl" do
     spider.add_to_web(action1, action2, action3)
     spider.should_receive(:visit).with(action1).ordered
     spider.should_receive(:form).with(action2).ordered
@@ -25,9 +24,18 @@ describe Spidy do
     spider.crawl
   end
 
-  it "should not crawl without a yank" do
-    spider.add_to_web(action1)
-    expect { spider.crawl }.
-      to raise_error YankNotAvailableError
+  context "Error Checking" do
+    it "should not crawl without a yank" do
+      spider.add_to_web(action1)
+      expect { spider.crawl }.
+        to raise_error YankNotAvailableError
+    end
+
+    it "should not crawl without a visit" do
+      spider.add_to_web(action3)
+      expect { spider.crawl }.
+        to raise_error VisitNotAvailableError
+    end
   end
+
 end

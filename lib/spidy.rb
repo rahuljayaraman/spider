@@ -1,5 +1,7 @@
 class YankNotAvailableError < StandardError
 end
+class VisitNotAvailableError < StandardError
+end
 
 class Spidy
   attr_accessor :name
@@ -21,6 +23,9 @@ class Spidy
   def crawl
     if @actions.last.action_type != :yank
       raise YankNotAvailableError 
+    end
+    if @actions.first.action_type != :visit
+      raise VisitNotAvailableError 
     end
     perform_actions
   end
