@@ -22,6 +22,29 @@ class Spidy
     if @actions.last.action_type != :yank
       raise YankNotAvailableError 
     end
-    Agent.perform_actions @actions
+    perform_actions
+  end
+
+  private
+  def perform_actions
+    @actions.each do |action|
+      case action.action_type
+      when :visit
+        visit action
+      when :form
+        form action
+      when :yank
+        yank action
+      end
+    end
+  end
+
+  def visit action
+  end
+
+  def form action
+  end
+
+  def yank action
   end
 end
