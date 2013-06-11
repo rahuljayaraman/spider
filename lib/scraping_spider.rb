@@ -3,28 +3,18 @@ end
 class VisitNotAvailableError < StandardError
 end
 
-require 'mechanize'
-
 class ScrapingSpider
-  attr_accessor :name
-  def initialize name, agent
+  attr_accessor :name, :actions, :engine
+  def initialize name
     @name = name
     @actions = []
-    @agent = Mechanize.new
-  end
-
-  def get_agent
-    @agent
+    @engine = MechanizeEngine.new
   end
 
   def add_to_web *actions
     actions.each do |action|
       @actions << action if action.respond_to? :action_type
     end
-  end
-
-  def actions
-    @actions
   end
 
   def crawl
@@ -42,21 +32,12 @@ class ScrapingSpider
     @actions.each do |action|
       case action.action_type
       when :visit_site
-        visit_site action
+        @engine.visit_site action
       when :fill_form
-        fill_form action
+        @engine.fill_form action
       when :yank_data
-        yank_data action
+        @engine.yank_data action
       end
     end
-  end
-
-  def visit_site action
-  end
-
-  def fill_form action
-  end
-
-  def yank_data action
   end
 end
