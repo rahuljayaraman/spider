@@ -2,9 +2,9 @@ require_relative '../../lib/scraping_spider'
 
 describe ScrapingSpider do
   let(:spider) { ScrapingSpider.new "Test", :mechanize }
-  let(:action1) { stub(action_type: :visit, url: "http://google.com") }
-  let(:action2) { stub(action_type: :form, field_name: "q", text: "Apple") }
-  let(:action3) { stub(action_type: :yank, div: "resultStats") }
+  let(:action1) { stub(action_type: :visit_site, url: "http://google.com") }
+  let(:action2) { stub(action_type: :fill_form, field_name: "q", text: "Apple") }
+  let(:action3) { stub(action_type: :yank_data, div: "resultStats") }
 
   it "should set scraping agent on initialization" do
     spider.get_agent.should_not be_nil
@@ -22,9 +22,9 @@ describe ScrapingSpider do
   it "should delegate 
   actions correctly when asked to crawl" do
     spider.add_to_web(action1, action2, action3)
-    spider.should_receive(:visit).with(action1).ordered
-    spider.should_receive(:form).with(action2).ordered
-    spider.should_receive(:yank).with(action3).ordered
+    spider.should_receive(:visit_site).with(action1).ordered
+    spider.should_receive(:fill_form).with(action2).ordered
+    spider.should_receive(:yank_data).with(action3).ordered
     spider.crawl
   end
 

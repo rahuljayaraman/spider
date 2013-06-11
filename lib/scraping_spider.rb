@@ -28,10 +28,10 @@ class ScrapingSpider
   end
 
   def crawl
-    if @actions.last.action_type != :yank
+    if @actions.last.action_type != :yank_data
       raise YankNotAvailableError 
     end
-    if @actions.first.action_type != :visit
+    if @actions.first.action_type != :visit_site
       raise VisitNotAvailableError 
     end
     perform_actions
@@ -41,22 +41,22 @@ class ScrapingSpider
   def perform_actions
     @actions.each do |action|
       case action.action_type
-      when :visit
-        visit action
-      when :form
-        form action
-      when :yank
-        yank action
+      when :visit_site
+        visit_site action
+      when :fill_form
+        fill_form action
+      when :yank_data
+        yank_data action
       end
     end
   end
 
-  def visit action
+  def visit_site action
   end
 
-  def form action
+  def fill_form action
   end
 
-  def yank action
+  def yank_data action
   end
 end
