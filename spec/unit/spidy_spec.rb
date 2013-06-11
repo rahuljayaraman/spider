@@ -1,5 +1,7 @@
 require_relative '../../lib/spidy'
 
+class Agent; end
+
 describe Spidy do
   let(:spider) { Spidy.new "Test" }
 
@@ -15,11 +17,10 @@ describe Spidy do
   end
 
   it "should perform actions when asked to crawl" do
-    action1 = stub(action_type: :visit)
+    action1 = stub(action_type: :visit, url: "http://google.com")
     action2 = stub(action_type: :yank)
     spider.add_to_web(action1, action2)
-    action1.should_receive :perform
-    action2.should_receive :perform
+    Agent.should_receive(:perform_actions).with([action1, action2])
     spider.crawl
   end
 
