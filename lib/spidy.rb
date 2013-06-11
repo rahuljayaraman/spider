@@ -3,11 +3,18 @@ end
 class VisitNotAvailableError < StandardError
 end
 
+require 'mechanize'
+
 class Spidy
   attr_accessor :name
-  def initialize name
+  def initialize name, agent
     @name = name
     @actions = []
+    @agent = Mechanize.new
+  end
+
+  def get_agent
+    @agent
   end
 
   def add_to_web *actions

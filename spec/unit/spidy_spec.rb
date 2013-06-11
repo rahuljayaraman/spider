@@ -1,10 +1,14 @@
 require_relative '../../lib/spidy'
 
 describe Spidy do
-  let(:spider) { Spidy.new "Test" }
+  let(:spider) { Spidy.new "Test", :mechanize }
   let(:action1) { stub(action_type: :visit, url: "http://google.com") }
   let(:action2) { stub(action_type: :form, field_name: "q", text: "Apple") }
   let(:action3) { stub(action_type: :yank, div: "resultStats") }
+
+  it "should set scraping agent on initialization" do
+    spider.get_agent.should_not be_nil
+  end
 
   it "should respond to name" do
     spider.name.should == "Test" 
