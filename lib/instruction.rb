@@ -1,9 +1,9 @@
-class Action
-  attr_accessor :action_type, :url, :form_name, :field_name, :text, :div
+class Instruction
+  attr_accessor :action, :url, :form_name, :field_name, :text, :div
 
   def initialize params
-    @action_type = params.fetch :action_type
-    case @action_type
+    @action = params.fetch :action
+    case @action
     when :visit_site
       @url = params.fetch :url
     when :fill_form

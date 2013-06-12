@@ -4,15 +4,15 @@
 
         spider = ScrapingSpider.new "Google"
 
-### Give the spider new directives
+### Define Instructions
 
-        visit_site = Action.new action_type: :visit_site, url: "http://google.com"
-        fill_form = Action.new action_type: :fill_form, field_name: "q", text: "Apple"
-        yank_data = Action.new action_type: :yank_data, div: "resultStats"
+        visit_site = Instruction.new action: :visit_site, url: "http://google.com"
+        fill_form = Instruction.new action: :fill_form, field_name: "q", text: "Apple"
+        yank_data = Instruction.new action: :yank_data, div: "resultStats"
 
-### Add the directives to the spider's web
+### Feed them to the spider
 
-        spider.add_to_web visit_site, fill_form, yank_data
+        spider.feed_instructions visit_site, fill_form, yank_data
 
 ### Make the spider crawl
 

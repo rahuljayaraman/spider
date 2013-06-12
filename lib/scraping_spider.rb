@@ -6,40 +6,40 @@ class DataNotFound < StandardError
 end
 
 class ScrapingSpider
-  attr_accessor :name, :actions, :engine
+  attr_accessor :name, :instructions, :engine
   def initialize name
     @name = name
-    @actions = []
+    @instructions = []
     @engine = MechanizeEngine.new
   end
 
-  def add_to_web *actions
-    actions.each do |action|
-      @actions << action if action.respond_to? :action_type
+  def feed_instructions *instructions
+    instructions.each do |action|
+      @instructions << action if action.respond_to? :action
     end
   end
 
   def crawl
-    if @actions.last.action_type != :yank_data
+    if @instructions.last.action != :yank_data
       raise YankNotAvailableError 
     end
-    if @actions.first.action_type != :visit_site
+    if @instructions.first.action != :visit_site
       raise VisitNotAvailableError 
     end
-    raise DataNotFound unless perform_actions
-    perform_actions
+    raise DataNotFound unless perform
+    perform
   end
 
   private
-  def perform_actions
-    @actions.each do |action|
-      case action.action_type
+  def perform
+    @instructions.each do |instruction|
+      case instruction.action
       when :visit_site
-        @engine.visit_site action
+        @engine.visit_site instruction
       when :fill_form
-        @engine.fill_form action
+        @engine.fill_form instruction
       when :yank_data
-        return @engine.yank_data action
+        return @engine.yank_data instruction
       end
     end
   end
