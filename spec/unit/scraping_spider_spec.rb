@@ -12,9 +12,11 @@ describe ScrapingSpider do
     spider.name.should == "Test" 
   end
 
-  it "should allow adding instructions to its web" do
+  it "should eat instructions & forget them when required" do
     spider.feed_instructions(instruction1, instruction2)
     spider.instructions.should == [instruction1, instruction2]
+    spider.forget_instructions!
+    spider.instructions.should be_empty
   end
 
 

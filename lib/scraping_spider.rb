@@ -19,6 +19,10 @@ class ScrapingSpider
     end
   end
 
+  def forget_instructions!
+    @instructions = []
+  end
+
   def crawl
     if @instructions.last.action != :yank_data
       raise YankNotAvailableError 
