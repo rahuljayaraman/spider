@@ -26,6 +26,9 @@ gem 'jquery-rails'
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'pry'
+end
+
+group :test do
   gem 'webmock'
   gem 'vcr'
 end
