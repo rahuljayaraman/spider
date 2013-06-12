@@ -18,13 +18,13 @@ describe ScrapingSpider do
   end
 
 
-  context "Making the spider crawl correctly" do
+  context "Crawl" do
     before do
       spider.add_to_web(action1, action2, action3)
     end
     let(:engine) { spider.engine }
 
-    it "should delegate actions correctly when asked to crawl" do
+    it "should delegate actions correctly" do
       engine.should_receive(:visit_site).with(action1).ordered
       engine.should_receive(:fill_form).with(action2).ordered
       engine.should_receive(:yank_data).with(action3).ordered
@@ -45,5 +45,4 @@ describe ScrapingSpider do
         to raise_error VisitNotAvailableError
     end
   end
-
 end

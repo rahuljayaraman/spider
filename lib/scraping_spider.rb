@@ -36,7 +36,7 @@ class ScrapingSpider
       when :fill_form
         @engine.fill_form action
       when :yank_data
-        @engine.yank_data action
+        return @engine.yank_data action
       end
     end
   end
