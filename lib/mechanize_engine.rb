@@ -1,3 +1,6 @@
+class DataNotFound < StandardError
+end
+
 require 'mechanize'
 
 class MechanizeEngine
@@ -16,10 +19,13 @@ class MechanizeEngine
   end
 
   def yank_data action
-    current_page.search(action.div).first.text
+    page = current_page.search(action.div)
+    raise DataNotFound if page.empty?
+    page.first.text
   end
 
   def current_page
+    raise DataNotFound unless agent.current_page
     agent.current_page
   end
 end

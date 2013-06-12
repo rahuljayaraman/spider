@@ -19,16 +19,24 @@ describe ScrapingSpider do
 
 
   context "Crawl" do
-    before do
-      spider.add_to_web(action1, action2, action3)
-    end
     let(:engine) { spider.engine }
 
-    it "should delegate actions correctly" do
+    it "should delegate actions in order and return data" do
+      spider.add_to_web(action1, action2, action3)
       engine.should_receive(:visit_site).with(action1).ordered
       engine.should_receive(:fill_form).with(action2).ordered
       engine.should_receive(:yank_data).with(action3).ordered
+      engine.stub(:visit_site)
+      engine.stub(:fill_form)
+      engine.stub(:yank_data).with(action3).and_return("data")
       spider.crawl
+    end
+
+    it "should raise exception when no data is found" do
+      spider.add_to_web(action1, action3)
+      engine.stub(:visit_site)
+      engine.stub(:yank_data).and_return(nil)
+      expect { spider.crawl }.to raise_exception DataNotFound
     end
   end
 

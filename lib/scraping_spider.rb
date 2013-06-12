@@ -2,6 +2,8 @@ class YankNotAvailableError < StandardError
 end
 class VisitNotAvailableError < StandardError
 end
+class DataNotFound < StandardError
+end
 
 class ScrapingSpider
   attr_accessor :name, :actions, :engine
@@ -24,6 +26,7 @@ class ScrapingSpider
     if @actions.first.action_type != :visit_site
       raise VisitNotAvailableError 
     end
+    raise DataNotFound unless perform_actions
     perform_actions
   end
 
