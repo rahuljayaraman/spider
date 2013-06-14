@@ -23,6 +23,10 @@ describe Instruction do
     yank_instruction.action.should == :yank_data
   end
 
+  it "should fetch list of available instructions" do
+    Instruction.available_set.should == [:visit_site, :fill_form, :yank_data]
+  end
+
   context "Visit" do
     it "should insist on url" do
       expect do 

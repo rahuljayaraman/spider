@@ -12,4 +12,8 @@ class Instruction
       @css = params.fetch :css
     end
   end
+
+  def self.available_set
+    [:visit_site, :fill_form, :yank_data]
+  end
 end
