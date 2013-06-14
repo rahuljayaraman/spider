@@ -1,6 +1,6 @@
 require "capybara"
 require "capybara/dsl"
-require "capybara-webkit"
+require 'capybara/poltergeist'
 Capybara.run_server = false
 Capybara.default_wait_time = 10
 
@@ -8,7 +8,7 @@ class CapybaraEngine
   attr_accessor :current_page
 
   def initialize
-    @current_page = Capybara::Session.new(:webkit)
+    @current_page = Capybara::Session.new(:poltergeist)
   end
 
   def visit_site action
