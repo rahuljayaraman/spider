@@ -7,6 +7,8 @@ gem 'rails', '3.2.13'
 
 gem 'sqlite3'
 gem 'mechanize'
+gem 'capybara'
+gem 'capybara-webkit'
 
 
 # Gems used only for assets and not required

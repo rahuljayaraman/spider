@@ -5,7 +5,7 @@ class MechanizeEngine; end
 describe ScrapingSpider do
   let(:spider) { ScrapingSpider.new "Test" }
   let(:instruction1) { stub(action: :visit_site, url: "http://google.com") }
-  let(:instruction2) { stub(action: :fill_form, form_name: "f", field_name: "q", text: "Apple") }
+  let(:instruction2) { stub(action: :fill_form, fields: [{ field_name: "srchword", text: "cricket" }]) }
   let(:instruction3) { stub(action: :yank_data, div: "resultStats") }
 
   it "should respond to name" do

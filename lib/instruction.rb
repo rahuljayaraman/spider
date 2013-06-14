@@ -1,5 +1,5 @@
 class Instruction
-  attr_accessor :action, :url, :form_name, :field_name, :text, :div
+  attr_accessor :action, :url, :fields, :text, :css
 
   def initialize params
     @action = params.fetch :action
@@ -7,11 +7,9 @@ class Instruction
     when :visit_site
       @url = params.fetch :url
     when :fill_form
-      @form_name = params.fetch :form_name
-      @field_name = params.fetch :field_name
-      @text = params.fetch :text
+      @fields = params.fetch :fields
     when :yank_data
-      @div = params.fetch :div
+      @css = params.fetch :css
     end
   end
 end

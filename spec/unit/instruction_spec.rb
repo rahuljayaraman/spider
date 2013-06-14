@@ -6,13 +6,15 @@ describe Instruction do
     url: "http://google.com"
   }
 
-  let(:fill_instruction) {
-    Instruction.new action: :fill_form,
-    form_name: "f", field_name: "q", text: "Apple"
+  let(:fill_instruction) { 
+    Instruction.new(
+      action: :fill_form, 
+      fields: [{ field_name: "q", text: "Apple" }]
+    ) 
   }
 
   let(:yank_instruction) { 
-    Instruction.new action: :yank_data, div: "#resultStats"
+    Instruction.new action: :yank_data, css: "#resultStats"
   }
 
   it "should fetch type correctly" do
@@ -41,21 +43,22 @@ describe Instruction do
     end
     
     it "should fetch field_name, form_name & text correctly" do
-      fill_instruction.form_name.should == "f"
-      fill_instruction.field_name.should == "q"
-      fill_instruction.text.should == "Apple"
+      fill_instruction.fields.first.fetch(:field_name).
+        should == "q"
+      fill_instruction.fields.first.fetch(:text).
+        should == "Apple"
     end
   end
 
   context "Yank Data" do
-    it "should insist on div" do
+    it "should insist on css" do
       expect do 
         Instruction.new(action: :yank_data) 
       end.to raise_exception KeyError
     end
     
     it "should fetch field_name, form_name & text correctly" do
-      yank_instruction.div.should == "#resultStats"
+      yank_instruction.css.should == "#resultStats"
     end
   end
 end

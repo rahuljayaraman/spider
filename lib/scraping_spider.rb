@@ -4,13 +4,15 @@ class VisitNotAvailableError < StandardError
 end
 class DataNotFound < StandardError
 end
+require 'capybara_engine'
 
 class ScrapingSpider
   attr_accessor :name, :instructions, :engine
   def initialize name
     @name = name
     @instructions = []
-    @engine = MechanizeEngine.new
+    # @engine = MechanizeEngine.new
+    @engine = CapybaraEngine.new
   end
 
   def feed_instructions *instructions
