@@ -1,6 +1,5 @@
 require_relative '../../lib/scraping_spider'
 require_relative '../../lib/instruction'
-require_relative '../../lib/mechanize_engine'
 
 describe "Spider" do
   let(:spider)  { ScrapingSpider.new "Test" }
