@@ -9,6 +9,9 @@ class CapybaraEngine
 
   def initialize
     @current_page = Capybara::Session.new(:poltergeist)
+    @current_page.driver.headers = {
+      "User-Agent" => "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36"
+    }
   end
 
   def visit_site action
@@ -20,10 +23,10 @@ class CapybaraEngine
     fields.each do |field|
       current_page.fill_in field.fetch(:field_name), with: field.fetch(:text)
     end
-    current_page.first("input[type=submit]").click
+    current_page.first(:xpath, "//*[@type='submit']").click
   end
 
-  def click_on action
+  def click action
     current_page.click_on(action.link)
   end
 

@@ -18,15 +18,17 @@ describe "Spider" do
     spider.crawl.should include "Last Updated" 
   end
 
-  it "should be able to visit site, fill form & fetch data" do
-    instruction1 = Instruction.new action: :visit_site, url: "http://www.google.com"
+  it "should be able to visit site, click on a link, fill form & fetch data" do
+    instruction1 = Instruction.new action: :visit_site, url: "http://ebay.in"
     instruction2 = Instruction.new(
       action: :fill_form, 
-      fields: [{ field_name: "q", text: "Apple" }]
+      fields: [
+        { field_name: "_nkw", text: "Lumia" }
+      ]
     ) 
-    instruction3 = Instruction.new action: :yank_data, css: "#resultStats"
+    instruction3 = Instruction.new action: :yank_data, css: "span.smuy"
     spider.feed_instructions(instruction1, instruction2, instruction3)
-    spider.crawl.should include "About" 
+    spider.crawl.should include "results" 
   end
 
   it "should raise error when unable to yank information" do

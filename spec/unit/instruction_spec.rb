@@ -24,7 +24,7 @@ describe Instruction do
   end
 
   it "should fetch list of available instructions" do
-    Instruction.available_set.should == [:visit_site, :fill_form, :yank_data]
+    Instruction.available_set.should == [:visit_site, :fill_form, :yank_data, :click]
   end
 
   context "Visit" do

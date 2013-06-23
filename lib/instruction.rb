@@ -1,5 +1,5 @@
 class Instruction
-  attr_accessor :action, :url, :fields, :text, :css
+  attr_accessor :action, :url, :fields, :text, :css, :link
 
   def initialize params
     @action = params.fetch :action
@@ -10,10 +10,12 @@ class Instruction
       @fields = params.fetch :fields
     when :yank_data
       @css = params.fetch :css
+    when :click
+      @link = params.fetch :link
     end
   end
 
   def self.available_set
-    [:visit_site, :fill_form, :yank_data]
+    [:visit_site, :fill_form, :yank_data, :click]
   end
 end

@@ -44,6 +44,8 @@ class ScrapingSpider
         @engine.visit_site instruction
       when :fill_form
         @engine.fill_form instruction
+      when :click
+        @engine.click instruction
       when :yank_data
         return @engine.yank_data instruction
       end
