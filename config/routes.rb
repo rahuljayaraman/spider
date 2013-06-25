@@ -1,4 +1,7 @@
 Spider::Application.routes.draw do
+
+  root :to => 'robots#gogogo'
+  match 'robots/gogogo' => 'robots#gogogo', as: :dispatch_robot
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

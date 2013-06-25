@@ -23,7 +23,8 @@ class CapybaraEngine
     fields.each do |field|
       current_page.fill_in field.fetch(:field_name), with: field.fetch(:text)
     end
-    current_page.first(:xpath, "//*[@type='submit']").click
+    submit_button = current_page.first(:xpath, "//*[@type='submit']")
+    submit_button.click
   end
 
   def click action
