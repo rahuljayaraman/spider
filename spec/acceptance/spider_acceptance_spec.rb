@@ -19,16 +19,16 @@ describe "Spider" do
   end
 
   it "should be able to visit site, click on a link, fill form & fetch data" do
-    instruction1 = Instruction.new action: :visit_site, url: "http://ebay.in"
+    instruction1 = Instruction.new action: :visit_site, url: "http://google.com"
     instruction2 = Instruction.new(
       action: :fill_form, 
       fields: [
-        { field_name: "_nkw", text: "Lumia" }
+        { field_name: "q", text: "Lumia" }
       ]
     ) 
-    instruction3 = Instruction.new action: :yank_data, css: "span.smuy"
+    instruction3 = Instruction.new action: :yank_data, css: "div#resultStats"
     spider.feed_instructions(instruction1, instruction2, instruction3)
-    spider.crawl.should include "results" 
+    spider.crawl.should include "About" 
   end
 
   it "should raise error when unable to yank information" do
