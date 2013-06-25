@@ -25,7 +25,7 @@ class CapybaraEngine
       current_page.fill_in field.fetch(:field_name), with: field.fetch(:text)
     end
     form = current_page.find(:fillable_field, fields.last.fetch(:field_name)).first(:xpath, "ancestor::form")
-    submit_button = form.first(:xpath, ".//*[@type='submit']")
+    submit_button = form.first(:xpath, ".//*[@type='submit']") || form.first(:xpath, ".//a")
     submit_button.click
   end
 
