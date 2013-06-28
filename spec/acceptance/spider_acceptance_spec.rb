@@ -18,7 +18,15 @@ describe "Spider" do
     spider.crawl.should include "Last Updated" 
   end
 
-  it "should be able to visit site, click on a link, fill form & fetch data" do
+  it "should be able to redirect by clicking on a link" do
+    instruction1 = Instruction.new action: :visit_site, url: "http://www.rediff.com"
+    instruction2 = Instruction.new action: :click, link: "Books"
+    instruction3 = Instruction.new action: :yank_data, css: "h4.red_picks_hd"
+    spider.feed_instructions(instruction1, instruction2, instruction3)
+    spider.crawl.should include "PICKS" 
+  end
+
+  it "should be able to visit site, fill form & fetch data" do
     instruction1 = Instruction.new action: :visit_site, url: "http://google.com"
     instruction2 = Instruction.new(
       action: :fill_form, 

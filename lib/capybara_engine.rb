@@ -11,7 +11,7 @@ class CapybaraEngine
   def initialize
     @current_page = Capybara::Session.new(:poltergeist)
     # @current_page.driver.headers = {
-    #   "User-Agent" => "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36"
+    #   "User-Agent" => "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.63 Safari/537.31"
     # }
   end
 
@@ -24,13 +24,15 @@ class CapybaraEngine
     fields.each do |field|
       current_page.fill_in field.fetch(:field_name), with: field.fetch(:text)
     end
-    form = current_page.find(:fillable_field, fields.last.fetch(:field_name)).first(:xpath, "ancestor::form")
+    form = current_page.find(:fillable_field, fields.last.
+                             fetch(:field_name)).
+                             first(:xpath, "ancestor::form")
     submit_button = form.first(:xpath, ".//*[@type='submit']") || form.first(:xpath, ".//a")
     submit_button.click
   end
 
   def click action
-    current_page.click_on(action.link)
+    current_page.first(:link_or_button, action.link).click
   end
 
   def yank_data action
