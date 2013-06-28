@@ -20,6 +20,8 @@ class RobotsController < ApplicationController
         @results = spider.crawl
       rescue Capybara::Poltergeist::TimeoutError
         @results = "Request Timed out"
+      rescue DataNotFound
+        @results = "Data not found"
       end
     end
   end
