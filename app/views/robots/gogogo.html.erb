@@ -1,11 +1,14 @@
 <h1>Dispatch your Robot to fetch data</h1>
 <%= form_tag dispatch_robot_path do %>
   <%= text_field_tag :visit, nil, placeholder: "Visit" %><br>
-  <%= text_field_tag :click, nil, placeholder: "Click on" %><br>
-  <%= text_field_tag :field_name, nil, placeholder: "Field Name" %>
-  <%= text_field_tag :field_content, nil, placeholder: "Content" %><br>
-  <%= text_field_tag :yank, nil, placeholder: "Fetch Data" %><br>
-  <%= submit_tag :dispatch %>
+  <%= link_to "Add form action", "#", class: "form_action" %> | 
+  <%= link_to "Add click action", "#", class: "click_action" %><br>
+  <div class="fill_form">
+  </div>
+  <div class="click_on">
+  </div>
+  <%= text_field_tag :yank, nil, placeholder: "Yank" %><br>
+  <%= submit_tag :fetch %>
 <% end -%>
 <hr>
 <% if @results -%>

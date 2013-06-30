@@ -8,11 +8,21 @@ class RobotsController < ApplicationController
         instructions = []
         visit = params.fetch :visit
         instructions << Instruction.new(action: :visit_site, url: visit)
-        click = params.fetch :click
-        instructions << Instruction.new(action: :click, link: click) unless click.blank?
-        field_name = params.fetch :field_name
-        field_content = params.fetch :field_content
-        instructions << Instruction.new(action: :fill_form, fields: [{field_name: field_name, text: field_content}]) unless field_name.blank?
+        if params[:clicks].present? && !params[:clicks].empty?
+          clicks = params.fetch :clicks
+          clicks.each do |key, value|
+            click = value.fetch :click
+            instructions << Instruction.new(action: :click, link: click) unless click.blank?
+          end
+        end
+        if params[:forms].present? && !params[:forms].empty?
+          forms = params.fetch :forms
+          forms.each do |key, value|
+            field_name = value.fetch :field_name
+            field_content = value.fetch :field_content
+            instructions << Instruction.new(action: :fill_form, fields: [{field_name: field_name, text: field_content}]) unless field_name.blank?
+          end
+        end
         yank = params.fetch :yank
         instructions << Instruction.new(action: :yank_data, css: yank)
         spider = ScrapingSpider.new "Fetch"
