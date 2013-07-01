@@ -32,10 +32,13 @@ class CapybaraEngine
   end
 
   def click action
-    current_page.first(:link_or_button, action.link).click
+    link = current_page.first(:link_or_button, action.link)
+    link.click
   end
 
   def yank_data action
-    current_page.first(:css, action.css).text rescue nil
+    data = current_page.first(:css, action.css)
+    raise DataNotFound unless data
+    data.text
   end
 end

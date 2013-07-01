@@ -39,13 +39,6 @@ describe ScrapingSpider do
       engine.stub(:yank_data).with(instruction3).and_return("data")
       spider.crawl
     end
-
-    it "should raise exception when no data is found" do
-      spider.feed_instructions(instruction1, instruction3)
-      engine.stub(:visit_site)
-      engine.stub(:yank_data).and_return(nil)
-      expect { spider.crawl }.to raise_exception DataNotFound
-    end
   end
 
   context "Error Checking" do

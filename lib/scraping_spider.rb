@@ -36,12 +36,12 @@ class ScrapingSpider
     if @instructions.first.action != :visit_site
       raise VisitNotAvailableError 
     end
-    raise DataNotFound unless perform
     perform
   end
 
   private
   def perform
+    @data_returned = []
     @instructions.each do |instruction|
       case instruction.action
       when :visit_site
@@ -51,8 +51,9 @@ class ScrapingSpider
       when :click
         @engine.click instruction
       when :yank_data
-        return @engine.yank_data instruction
+        @data_returned << @engine.yank_data(instruction)
       end
     end
+    @data_returned
   end
 end

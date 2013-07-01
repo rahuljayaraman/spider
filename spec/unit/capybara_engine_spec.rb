@@ -14,7 +14,7 @@ describe CapybaraEngine do
 
   it "should be able to yank information" do
     action4 = stub(action: :yank_data, css: "div#matchcontent0")
-    current_page.should_receive(:first).with(:css, action4.css)
+    current_page.should_receive(:first).with(:css, action4.css).and_return(stub(text: "foo"))
     data = engine.yank_data action4
   end
 end
