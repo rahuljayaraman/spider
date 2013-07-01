@@ -5,6 +5,7 @@ end
 class DataNotFound < StandardError
 end
 require 'capybara_engine'
+require 'instruction'
 
 class ScrapingSpider
   attr_accessor :name, :instructions, :engine
@@ -17,6 +18,9 @@ class ScrapingSpider
 
   def feed_instructions *instructions
     instructions.each do |action|
+      if action.is_a? Hash
+        action = Instruction.new action
+      end
       @instructions << action if action.respond_to? :action
     end
   end

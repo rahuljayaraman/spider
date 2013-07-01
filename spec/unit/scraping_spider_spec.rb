@@ -19,6 +19,12 @@ describe ScrapingSpider do
     spider.instructions.should be_empty
   end
 
+  it "should be able to receive instructions in the form of a hash" do
+    instruction = { action: :visit_site, url: "http://google.com" }
+    spider.feed_instructions instruction
+    spider.instructions.first.should be_an_instance_of Instruction
+  end
+
 
   context "Crawl" do
     let(:engine) { spider.engine }
