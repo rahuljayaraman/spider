@@ -13,6 +13,11 @@ describe Instruction do
     ) 
   }
 
+  let(:click_instruction) { 
+    Instruction.new action: :click,
+    link: "Me"
+  }
+
   let(:yank_instruction) { 
     Instruction.new action: :yank_data, css: "#resultStats"
   }
@@ -51,6 +56,18 @@ describe Instruction do
         should == "q"
       fill_instruction.fields.first.fetch(:text).
         should == "Apple"
+    end
+  end
+
+  context "Click" do
+    it "should insist on link" do
+      expect do 
+        Instruction.new(action: :click) 
+      end.to raise_exception KeyError
+    end
+    
+    it "should fetch link correctly" do
+      click_instruction.link.should == "Me"
     end
   end
 
