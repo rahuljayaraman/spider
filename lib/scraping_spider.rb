@@ -4,6 +4,10 @@ class VisitNotAvailableError < StandardError
 end
 class DataNotFound < StandardError
 end
+class InstructionsNotSet < StandardError
+end
+class InvalidInstruction < StandardError
+end
 require 'capybara_engine'
 require 'instruction'
 
@@ -17,11 +21,19 @@ class ScrapingSpider
   end
 
   def feed_instructions *instructions
-    instructions.each do |action|
-      if action.is_a? Hash
-        action = Instruction.new action
+    if instructions.first.respond_to? :action
+      instructions.each do |instruction|
+        @instructions << instruction
       end
-      @instructions << action if action.respond_to? :action
+    elsif instructions.first.respond_to? :values
+      instructions.each do |inst|
+        value = inst.values.first
+        value[:action] = value[:action].to_sym
+        instruction = Instruction.new value
+        @instructions << instruction if instruction.respond_to? :action
+      end
+    else
+      raise InvalidInstruction
     end
   end
 
@@ -30,6 +42,7 @@ class ScrapingSpider
   end
 
   def crawl
+    raise InstructionsNotSet if @instructions.empty?
     if @instructions.last.action != :yank_data
       raise YankNotAvailableError 
     end

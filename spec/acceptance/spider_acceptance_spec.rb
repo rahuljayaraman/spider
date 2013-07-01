@@ -40,9 +40,9 @@ describe "Spider" do
   end
 
   it "should be able to yank twice" do
-    instruction1 = { action: :visit_site, url: "http://www.google.com" }
-    instruction2 = { action: :yank_data, css: "font#addlang" }
-    instruction3 = { action: :yank_data, css: "span.gbts" }
+    instruction1 = {"1" => { action: "visit_site", url: "http://www.google.com" } }
+    instruction2 = {"2" => { action: :yank_data, css: "font#addlang" } }
+    instruction3 = {"3" => { action: :yank_data, css: "span.gbts" } } 
     spider.feed_instructions(instruction1, instruction2, instruction3)
     data = spider.crawl
     data[0].should include "offered in" 

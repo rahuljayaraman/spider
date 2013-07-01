@@ -19,8 +19,16 @@ describe ScrapingSpider do
     spider.instructions.should be_empty
   end
 
+  it "should raise error on invalid instruction" do
+    instruction = [:action => "foo"]
+    expect {
+      spider.feed_instructions(instruction)
+    }.to raise_exception InvalidInstruction
+  end
+
   it "should be able to receive instructions in the form of a hash" do
-    instruction = { action: :visit_site, url: "http://google.com" }
+    class Instruction; def initialize(hash); end; end
+    instruction = { "1" => { action: "visit_site", url: "http://google.com" } }
     spider.feed_instructions instruction
     spider.instructions.first.should be_an_instance_of Instruction
   end
