@@ -1,5 +1,3 @@
-## Build a flexible module which can scrape information from any web-site
-
 ### Define a Spider
 
         spider = ScrapingSpider.new "Google"
